@@ -14,5 +14,5 @@ merged_data <- merged_data[, LotFrontage := NULL]
 train <- merged_data[grep("train_", merged_data$Id), ]
 test <- merged_data[grep("test_", merged_data$Id), ]
 
-fwrite(train, './housepricing/project/volume/data/interim/train.csv')
-fwrite(test, './housepricing/project/volume/data/interim/test.csv')
+fwrite(train, './housepricing/project/volume/data/raw/train.csv')
+fwrite(test, './housepricing/project/volume/data/raw/test.csv')
