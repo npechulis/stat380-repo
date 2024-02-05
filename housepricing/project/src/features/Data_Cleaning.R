@@ -7,13 +7,12 @@ set.seed(77)
 # merge data sets
 merged_data <- merge(housedata, qctable, all.x=T)
 
-# remove lot frontage since it has null values and isn't very useful
-merged_data <- merged_data[, LotFrontage := NULL]
-
-# make train and test sets and move to interim
+# make train and test sets and also create age column
 train <- merged_data[grep("train_", merged_data$Id), ]
 test <- merged_data[grep("test_", merged_data$Id), ]
+train[, 'Age':= YrSold - YearBuilt]
+test[, 'Age':= YrSold - YearBuilt]
 
 # shorten the table to include only variables I'm using
-fwrite(train[, c('Id', 'SalePrice', 'Qual', 'Cond'), with=F], './housepricing/project/volume/data/interim/train.csv')
-fwrite(test[, c('Id', 'SalePrice', 'Qual', 'Cond'), with=F], './housepricing/project/volume/data/interim/test.csv')
+fwrite(train[, c('Id', 'LotArea', 'FullBath', 'HalfBath', 'TotRmsAbvGrd', 'TotalBsmtSF', 'BedroomAbvGr', 'GrLivArea','SalePrice', 'Qual', 'Cond', 'Age'), with=F], './housepricing/project/volume/data/interim/train.csv')
+fwrite(test[, c('Id', 'LotArea', 'FullBath', 'HalfBath', 'TotRmsAbvGrd', 'TotalBsmtSF', 'BedroomAbvGr', 'GrLivArea','SalePrice', 'Qual', 'Cond', 'Age'), with=F], './housepricing/project/volume/data/interim/test.csv')
