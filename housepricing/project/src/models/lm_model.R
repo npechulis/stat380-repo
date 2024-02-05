@@ -20,13 +20,16 @@ test$SalePrice = 0
 master <- rbind(train,test)
 
 
-
 #test
+dummies <- dummyVars(SalePrice ~ Qual + Cond, data = master)
+train <- predict(dummies, newdata = train)
+test <- predict(dummies, newdata = test)
+
 train <- data.table(train)
 test <- data.table(test)
 train$SalePrice <- y_train
 
-lm_model <- lm(SalePrice~ LotArea + TotRmsAbvGrd + GrLivArea + BedroomAbvGr, data=train)
+lm_model <- lm(SalePrice~ ., data=train)
 summary(lm_model)
 
 # save submission
