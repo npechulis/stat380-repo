@@ -13,6 +13,7 @@ test <- merged_data[grep("test_", merged_data$Id), ]
 train[, 'Age':= YrSold - YearBuilt]
 test[, 'Age':= YrSold - YearBuilt]
 
+
 # shorten the table to include only variables I'm using
-fwrite(train[, c('Id', 'LotArea', 'FullBath', 'HalfBath', 'TotRmsAbvGrd', 'TotalBsmtSF', 'BedroomAbvGr', 'GrLivArea','SalePrice', 'Qual', 'Cond', 'Age'), with=F], './housepricing/project/volume/data/interim/train.csv')
-fwrite(test[, c('Id', 'LotArea', 'FullBath', 'HalfBath', 'TotRmsAbvGrd', 'TotalBsmtSF', 'BedroomAbvGr', 'GrLivArea','SalePrice', 'Qual', 'Cond', 'Age'), with=F], './housepricing/project/volume/data/interim/test.csv')
+fwrite(train[, c('Id', 'LotArea', 'FullBath', 'HalfBath', 'TotRmsAbvGrd', 'TotalBsmtSF', 'BedroomAbvGr', 'GrLivArea', 'YrSold','SalePrice', 'Qual', 'Cond', 'Age'), with=F], './housepricing/project/volume/data/interim/train.csv')
+fwrite(test[, c('Id', 'LotArea','FullBath', 'HalfBath', 'TotRmsAbvGrd', 'TotalBsmtSF', 'BedroomAbvGr', 'GrLivArea', 'YrSold','SalePrice', 'Qual', 'Cond', 'Age'), with=F], './housepricing/project/volume/data/interim/test.csv')

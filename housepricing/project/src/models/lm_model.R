@@ -1,38 +1,31 @@
 library(data.table)
-library(Metrics)
-library(caret)
 
 set.seed(77)
+
 
 # access files
 train <- fread('./housepricing/project/volume/data/interim/train.csv')
 test <- fread('./housepricing/project/volume/data/interim/test.csv')
-submission <- fread('./housepricing/project/volume/data/raw/example_sub.csv')
 
+# make qual and cond variables easier to work with since letters don't matter
+test$Qual <- as.numeric(gsub("[^0-9]", "", test$Qual))
+test$Cond <- as.numeric(gsub("[^0-9]", "", test$Cond))
+train$Qual <- as.numeric(gsub("[^0-9]", "", train$Qual))
+train$Cond <- as.numeric(gsub("[^0-9]", "", train$Cond))
 
-# initialize y vector, remove NA values from test set, and combine
-y_train = train$SalePrice
-y_test = submission$SalePrice
-
-test$SalePrice <- as.numeric(test$SalePrice)
-test$SalePrice = 0
-
-master <- rbind(train,test)
-
-
-#test
-dummies <- dummyVars(SalePrice ~ Qual + Cond, data = master)
-train <- predict(dummies, newdata = train)
-test <- predict(dummies, newdata = test)
-
-train <- data.table(train)
-test <- data.table(test)
-train$SalePrice <- y_train
-
-lm_model <- lm(SalePrice~ ., data=train)
+# begin regression and review summary
+input <- train[,c("LotArea","FullBath","HalfBath","TotRmsAbvGrd","TotalBsmtSF","BedroomAbvGr","GrLivArea","Age", 'YrSold','SalePrice', 'Qual', 'Cond')]
+lm_model = lm(SalePrice~LotArea+FullBath+HalfBath+TotRmsAbvGrd+TotalBsmtSF+BedroomAbvGr+GrLivArea+Age+YrSold+Qual+Cond, data=input)
 summary(lm_model)
 
-# save submission
-test$SalePrice <- predict(lm_model, newdata=test)
-submission$SalePrice <- test$SalePrice
+
+# apply our model to test data set
+test$SalePrice<-predict(lm_model,newdata = test[,.(LotArea,FullBath,HalfBath,TotRmsAbvGrd,TotalBsmtSF,BedroomAbvGr,GrLivArea,Age,YrSold,Qual,Cond)])
+
+# make numeric id column so that final submission values match
+test[, NumericId := as.numeric(gsub("test_", "", Id))]
+submission <- test[order(NumericId), .(Id, SalePrice)]
+
+# write final submission file
 fwrite(submission, './housepricing/project/volume/data/processed/submission.csv')
+
