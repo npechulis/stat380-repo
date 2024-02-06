@@ -14,6 +14,6 @@ train[, 'Age':= YrSold - YearBuilt]
 test[, 'Age':= YrSold - YearBuilt]
 
 
-# shorten the table to include only variables I'm using
+# shorten the table to include only variables I'm using and write to interim
 fwrite(train[, c('Id', 'LotArea', 'FullBath', 'HalfBath', 'TotRmsAbvGrd', 'TotalBsmtSF', 'BedroomAbvGr', 'GrLivArea', 'YrSold','SalePrice', 'Qual', 'Cond', 'Age'), with=F], './housepricing/project/volume/data/interim/train.csv')
 fwrite(test[, c('Id', 'LotArea','FullBath', 'HalfBath', 'TotRmsAbvGrd', 'TotalBsmtSF', 'BedroomAbvGr', 'GrLivArea', 'YrSold','SalePrice', 'Qual', 'Cond', 'Age'), with=F], './housepricing/project/volume/data/interim/test.csv')
