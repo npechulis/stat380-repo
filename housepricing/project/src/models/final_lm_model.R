@@ -28,5 +28,5 @@ submission <- test[order(NumericId), .(Id, SalePrice)]
 
 # write final submission file and save model
 fwrite(submission, './housepricing/project/volume/data/processed/submission.csv')
-saveRDS(lm_model,"./housepricing/project/volume/models/final_lm_model.txt")
+saveRDS(lm_model,"./housepricing/project/volume/data/processed/final_lm_model.txt")
 
