@@ -26,6 +26,7 @@ test$SalePrice<-predict(lm_model,newdata = test[,.(LotArea,FullBath,HalfBath,Tot
 test[, NumericId := as.numeric(gsub("test_", "", Id))]
 submission <- test[order(NumericId), .(Id, SalePrice)]
 
-# write final submission file
+# write final submission file and save model
 fwrite(submission, './housepricing/project/volume/data/processed/submission.csv')
+saveRDS(lm_model,"./project/volume/models/_empty_model.txt")
 
