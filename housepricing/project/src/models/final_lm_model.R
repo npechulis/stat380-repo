@@ -16,7 +16,7 @@ train$Cond <- as.numeric(gsub("[^0-9]", "", train$Cond))
 # begin regression and review summary
 input <- train[,c("LotArea","FullBath","HalfBath","TotRmsAbvGrd","TotalBsmtSF","BedroomAbvGr","GrLivArea","Age", 'YrSold','SalePrice', 'Qual', 'Cond')]
 lm_model = lm(SalePrice~LotArea+FullBath+HalfBath+TotRmsAbvGrd+TotalBsmtSF+BedroomAbvGr+GrLivArea+Age+YrSold+Qual+Cond, data=input)
-summary(lm_model)
+#summary(lm_model)
 
 
 # apply our model to test data set
@@ -28,5 +28,5 @@ submission <- test[order(NumericId), .(Id, SalePrice)]
 
 # write final submission file and save model
 fwrite(submission, './housepricing/project/volume/data/processed/submission.csv')
-saveRDS(lm_model,"./project/volume/models/_empty_model.txt")
+saveRDS(lm_model,"./housepricing/project/volume/models/final_lm_model.txt")
 
