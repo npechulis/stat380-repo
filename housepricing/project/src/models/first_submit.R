@@ -4,6 +4,9 @@ library(caret)
 
 set.seed(77)
 
+# this is my first submission that utilized feature engineering 
+# but id column was out of order so it got a bad grade
+
 # access files
 train <- fread('./housepricing/project/volume/data/interim/train.csv')
 test <- fread('./housepricing/project/volume/data/interim/test.csv')
