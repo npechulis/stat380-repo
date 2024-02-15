@@ -9,6 +9,8 @@ glm_model = glm(result ~ V1+V2+V3+V4+V5+V6+V7+V8+V9+V10, family=binomial,data=tr
 
 test$result <- predict(glm_model, newdata=test, type='response')
 
-# create submission file
+# create submission file and save model
 second_submission = test[, c('id', 'result')]
 fwrite(second_submission,"./coinflip/project/volume/data/processed/second_submission.csv")
+
+saveRDS(glm_model, './coinflip/project/volume/models/glm.model')
