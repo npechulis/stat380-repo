@@ -1,6 +1,6 @@
 library(data.table)
-housedata <- fread('./housepricing/project/volume/data/raw/Stat_380_housedata.csv')
-qctable <- fread('./housepricing/project/volume/data/raw/Stat_380_QC_table.csv')
+housedata <- fread('./project/volume/data/raw/Stat_380_housedata.csv')
+qctable <- fread('./project/volume/data/raw/Stat_380_QC_table.csv')
 
 set.seed(77)
 
@@ -15,5 +15,5 @@ test[, 'Age':= YrSold - YearBuilt]
 
 
 # shorten the table to include only variables I'm using and write to interim
-fwrite(train[, c('Id', 'LotArea', 'FullBath', 'HalfBath', 'TotRmsAbvGrd', 'TotalBsmtSF', 'BedroomAbvGr', 'GrLivArea', 'YrSold','SalePrice', 'Qual', 'Cond', 'Age'), with=F], './housepricing/project/volume/data/interim/train.csv')
-fwrite(test[, c('Id', 'LotArea','FullBath', 'HalfBath', 'TotRmsAbvGrd', 'TotalBsmtSF', 'BedroomAbvGr', 'GrLivArea', 'YrSold','SalePrice', 'Qual', 'Cond', 'Age'), with=F], './housepricing/project/volume/data/interim/test.csv')
+fwrite(train[, c('Id', 'LotArea', 'FullBath', 'HalfBath', 'TotRmsAbvGrd', 'TotalBsmtSF', 'BedroomAbvGr', 'GrLivArea', 'YrSold','SalePrice', 'Qual', 'Cond', 'Age'), with=F], './project/volume/data/interim/train.csv')
+fwrite(test[, c('Id', 'LotArea','FullBath', 'HalfBath', 'TotRmsAbvGrd', 'TotalBsmtSF', 'BedroomAbvGr', 'GrLivArea', 'YrSold','SalePrice', 'Qual', 'Cond', 'Age'), with=F], './project/volume/data/interim/test.csv')

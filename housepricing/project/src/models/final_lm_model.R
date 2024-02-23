@@ -4,8 +4,8 @@ set.seed(77)
 
 
 # access files
-train <- fread('./housepricing/project/volume/data/interim/train.csv')
-test <- fread('./housepricing/project/volume/data/interim/test.csv')
+train <- fread('./project/volume/data/interim/train.csv')
+test <- fread('./project/volume/data/interim/test.csv')
 
 # make qual and cond variables easier to work with since letters don't matter
 test$Qual <- as.numeric(gsub("[^0-9]", "", test$Qual))
@@ -27,6 +27,6 @@ test[, NumericId := as.numeric(gsub("test_", "", Id))]
 submission <- test[order(NumericId), .(Id, SalePrice)]
 
 # write final submission file and save model
-fwrite(submission, './housepricing/project/volume/data/processed/submission.csv')
-saveRDS(lm_model,"./housepricing/project/volume/data/processed/final_lm_model.txt")
+fwrite(submission, './project/volume/data/processed/submission.csv')
+saveRDS(lm_model,"./project/volume/data/processed/final_lm_model.txt")
 
